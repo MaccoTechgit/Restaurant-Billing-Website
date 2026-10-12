@@ -20,6 +20,7 @@ func pagesServer(t *testing.T) (*Server, http.Handler) {
 	}
 	t.Cleanup(func() { db.Close() })
 	s := &Server{db: db, lim: newLimiter(), site: "https://macbill.example"}
+	s.admins = &sqliteAdmins{db: db}
 	if err := s.migrate(); err != nil {
 		t.Fatal(err)
 	}

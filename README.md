@@ -40,3 +40,9 @@ Page text lives in `content.go` (add a page = add data), layout in `tpl/`.
 SEO built in: unique title + description per page, canonical URL, Open Graph/Twitter tags, JSON-LD (Organization, SoftwareApplication with
 your live prices, FAQPage, Article, BreadcrumbList), `/sitemap.xml`, `/robots.txt`, a real 404 page, gzip, clean URLs, one `<h1>` per page.
 **Before launch set `SITE_URL=https://your-domain`** - the sitemap, canonicals and e-mail links use it. `go test` checks every page for SEO basics and broken links.
+
+## Admin accounts in MongoDB
+Set `MONGO_URI` (environment variable or a git-ignored `.env` file, see `.env.example`) and the admin e-mail + password hash are stored in
+the MongoDB database `MONGO_DB` (default `macbill_site`), collection `admins` (unique e-mail index). Passwords are bcrypt hashes - never plain text.
+Without `MONGO_URI` the admin lives in the local SQLite file. Enquiries, customers and plans stay in SQLite.
+If MongoDB is unreachable, the public website keeps working; admin login shows "database not reachable" and retries.

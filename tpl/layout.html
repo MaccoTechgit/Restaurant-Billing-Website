@@ -35,7 +35,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="application-name" content="{{.Company}}">
 <meta name="apple-mobile-web-app-title" content="{{.Company}}">
-<link rel="stylesheet" href="/site.css?v=8">
+<link rel="stylesheet" href="/site.css?v=9">
 {{range .LD}}<script type="application/ld+json">{{.}}</script>
 {{end}}</head>
 <body>
@@ -45,11 +45,12 @@
   <a class="logo" href="/" aria-label="{{.Company}} home">{{template "mark"}}<span class="wm">{{wm .Company}}</span></a>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">{{ico "menu"}}</button>
   <nav id="nav" aria-label="Main">
+    <a href="/"{{if eq .Path "/"}} class="cur" aria-current="page"{{end}}>Home</a>
     <div class="dd"><button class="ddb" type="button" aria-haspopup="true">Product</button>
       <div class="ddm wide"><div class="ddcol"><b>Modules</b>{{range .Products}}<a href="{{.Path}}"><span class="mi">{{ico .Icon}}</span><div>{{.Name}}<small>{{.Short}}</small></div></a>{{end}}</div></div></div>
     <div class="dd"><button class="ddb" type="button" aria-haspopup="true">Solutions</button>
       <div class="ddm"><div class="ddcol"><b>Built for</b>{{range .Solutions}}<a href="{{.Path}}"><span class="mi">{{ico .Icon}}</span><div>{{.Name}}<small>{{.Short}}</small></div></a>{{end}}</div></div></div>
-    <a href="/pricing">Pricing</a><a href="/blog">Blog</a><a href="/about">About</a>
+    <a href="/pricing"{{if eq .Path "/pricing"}} class="cur" aria-current="page"{{end}}>Pricing</a><a href="/blog"{{if eq .Path "/blog"}} class="cur" aria-current="page"{{end}}>Blog</a><a href="/about"{{if eq .Path "/about"}} class="cur" aria-current="page"{{end}}>About</a><a href="/contact"{{if eq .Path "/contact"}} class="cur" aria-current="page"{{end}}>Contact</a>
     <a class="btn pri" href="/contact">Get a free demo</a>
   </nav>
 </div></header>
@@ -61,7 +62,7 @@
     <p><a href="mailto:{{.Email}}">{{.Email}}</a><a href="tel:+{{.WA}}">{{.Phone}}</a><span>{{.Address}}</span></p></div>
   <div><h4>Product</h4>{{range .Products}}<a href="{{.Path}}">{{.Name}}</a>{{end}}</div>
   <div><h4>Solutions</h4>{{range .Solutions}}<a href="{{.Path}}">{{.Name}}</a>{{end}}</div>
-  <div><h4>Company</h4><a href="/features">All features</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/blog">Blog</a><a href="/restaurant-billing-software">Billing software guide</a><a href="/restaurant-billing-software-bihar">Software for Bihar</a><a href="/faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy">Privacy policy</a><a href="/terms">Terms of service</a></div>
+  <div><h4>Company</h4><a href="/">Home</a><a href="/features">All features</a><a href="/pricing">Pricing</a><a href="/about">About</a><a href="/blog">Blog</a><a href="/restaurant-billing-software">Billing software guide</a><a href="/restaurant-billing-software-bihar">Software for Bihar</a><a href="/faq">FAQ</a><a href="/contact">Contact</a><a href="/privacy">Privacy policy</a><a href="/terms">Terms of service</a></div>
   <div class="copy"><span>© {{.Year}} {{.Legal}}. {{.Company}} is a product of {{.Legal}}. All rights reserved.</span><span>Made for restaurants in India.</span></div>
 </div></footer>
 <div class="fab" aria-label="Quick contact">

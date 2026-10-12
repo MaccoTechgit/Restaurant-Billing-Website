@@ -22,7 +22,6 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
 	_ "modernc.org/sqlite"
 )
 
@@ -30,10 +29,11 @@ import (
 var webFS embed.FS
 
 type Server struct {
-	ps   *pageSite
-	db   *sql.DB
-	lim  *limiter
-	site string
+	admins adminStore
+	ps     *pageSite
+	db     *sql.DB
+	lim    *limiter
+	site   string
 }
 
 func env(k, d string) string {
@@ -44,6 +44,7 @@ func env(k, d string) string {
 }
 
 func main() {
+	loadDotEnv()
 	_ = os.MkdirAll("data", 0o755)
 	db, err := openDB(env("DB_PATH", "data/macbill.db"))
 	if err != nil {
@@ -53,7 +54,11 @@ func main() {
 	if err := s.migrate(); err != nil {
 		log.Fatal(err)
 	}
-	s.seedAdmin()
+	s.admins = s.openAdminStore()
+	log.Printf("admin accounts are stored in %s", s.admins.Name())
+	if err := s.seedAdmin(); err != nil {
+		log.Printf("WARNING: could not prepare the admin account yet (%v) - the public website still works; it will retry on the first admin login", err)
+	}
 	go s.reminderLoop()
 
 	handler := s.routes()
@@ -210,7 +215,7 @@ func (s *Server) migrate() error {
 	_, err := s.db.Exec(`
 CREATE TABLE IF NOT EXISTS settings(k TEXT PRIMARY KEY, v TEXT NOT NULL DEFAULT '');
 CREATE TABLE IF NOT EXISTS admins(id INTEGER PRIMARY KEY, email TEXT UNIQUE NOT NULL, hash TEXT NOT NULL, name TEXT NOT NULL DEFAULT 'Admin', fails INTEGER NOT NULL DEFAULT 0, locked_until INTEGER NOT NULL DEFAULT 0);
-CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY, admin_id INTEGER NOT NULL, expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS sess(token_hash TEXT PRIMARY KEY, admin_key TEXT NOT NULL, expires INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS plans(id INTEGER PRIMARY KEY, name TEXT NOT NULL, months INTEGER NOT NULL, price INTEGER NOT NULL, tagline TEXT NOT NULL DEFAULT '', features TEXT NOT NULL DEFAULT '', popular INTEGER NOT NULL DEFAULT 0, active INTEGER NOT NULL DEFAULT 1, sort INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS enquiries(id INTEGER PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL DEFAULT '', business TEXT NOT NULL DEFAULT '', city TEXT NOT NULL DEFAULT '', plan TEXT NOT NULL DEFAULT '', message TEXT NOT NULL DEFAULT '', status TEXT NOT NULL DEFAULT 'new', note TEXT NOT NULL DEFAULT '', mail TEXT NOT NULL DEFAULT 'pending', ip TEXT NOT NULL DEFAULT '', created_at INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS ix_enq ON enquiries(created_at);
@@ -255,26 +260,6 @@ func (s *Server) setting(k string) string {
 	var v string
 	s.db.QueryRow(`SELECT v FROM settings WHERE k=?`, k).Scan(&v)
 	return v
-}
-
-func (s *Server) seedAdmin() {
-	var n int
-	s.db.QueryRow(`SELECT COUNT(*) FROM admins`).Scan(&n)
-	if n > 0 {
-		return
-	}
-	email, pw := strings.ToLower(env("ADMIN_EMAIL", "admin@macbill.in")), os.Getenv("ADMIN_PASSWORD")
-	generated := pw == ""
-	if generated {
-		b := make([]byte, 6)
-		rand.Read(b)
-		pw = "Mb-" + hex.EncodeToString(b)
-	}
-	h, _ := bcrypt.GenerateFromPassword([]byte(pw), 11)
-	s.db.Exec(`INSERT INTO admins(email,hash,name) VALUES(?,?,?)`, email, string(h), "Admin")
-	if generated {
-		fmt.Printf("\n  First admin login created\n  e-mail: %s\n  password: %s   (change it after logging in)\n\n", email, pw)
-	}
 }
 
 func (s *Server) routes() http.Handler {

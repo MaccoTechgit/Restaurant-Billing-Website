@@ -90,6 +90,7 @@ func testServer(t *testing.T) (*Server, http.Handler) {
 	}
 	t.Cleanup(func() { db.Close() })
 	s := &Server{db: db, lim: newLimiter(), site: "http://localhost:4000"}
+	s.admins = &sqliteAdmins{db: db}
 	if err := s.migrate(); err != nil {
 		t.Fatal(err)
 	}

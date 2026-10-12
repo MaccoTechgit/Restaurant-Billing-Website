@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"net/mail"
 	"regexp"
@@ -56,22 +57,24 @@ func (s *Server) one(q string, args ...any) map[string]any {
 	return r[0]
 }
 
-func (s *Server) adminID(r *http.Request) int64 {
+// adminKey returns the e-mail of the logged-in admin ("" when not logged in).
+func (s *Server) adminKey(r *http.Request) string {
 	c, err := r.Cookie(sessCookie)
 	if err != nil || len(c.Value) != 64 {
-		return 0
+		return ""
 	}
-	var id, exp int64
-	if s.db.QueryRow(`SELECT admin_id,expires FROM sessions WHERE token_hash=?`, sha(c.Value)).Scan(&id, &exp) != nil || exp < now() {
-		return 0
+	var key string
+	var exp int64
+	if s.db.QueryRow(`SELECT admin_key,expires FROM sess WHERE token_hash=?`, sha(c.Value)).Scan(&key, &exp) != nil || exp < now() {
+		return ""
 	}
-	return id
+	return key
 }
 
 // auth guards every admin call. State-changing calls must also carry the custom header (blocks cross-site forms).
 func (s *Server) auth(h func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if s.adminID(r) == 0 {
+		if s.adminKey(r) == "" {
 			fail(w, 401, "Please log in")
 			return
 		}
@@ -89,19 +92,24 @@ func (s *Server) adminRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/admin/login", s.login)
 	mux.HandleFunc("POST /api/admin/logout", func(w http.ResponseWriter, r *http.Request) {
 		if c, err := r.Cookie(sessCookie); err == nil {
-			s.db.Exec(`DELETE FROM sessions WHERE token_hash=?`, sha(c.Value))
+			s.db.Exec(`DELETE FROM sess WHERE token_hash=?`, sha(c.Value))
 		}
 		http.SetCookie(w, &http.Cookie{Name: sessCookie, Path: "/", MaxAge: -1})
 		writeJSON(w, 200, map[string]any{"ok": true})
 	})
 	A := s.auth
 	mux.HandleFunc("GET /api/admin/me", func(w http.ResponseWriter, r *http.Request) {
-		id := s.adminID(r)
-		if id == 0 {
+		key := s.adminKey(r)
+		if key == "" {
 			fail(w, 401, "Please log in")
 			return
 		}
-		writeJSON(w, 200, s.one(`SELECT id,email,name FROM admins WHERE id=?`, id))
+		adm, err := s.admins.Get(key)
+		if err != nil || adm == nil {
+			fail(w, 401, "Please log in")
+			return
+		}
+		writeJSON(w, 200, map[string]any{"email": adm.Email, "name": adm.Name})
 	})
 	mux.HandleFunc("GET /api/admin/dashboard", A(s.dashboard))
 	mux.HandleFunc("GET /api/admin/enquiries", A(s.listEnquiries))
@@ -165,32 +173,38 @@ func (s *Server) login(w http.ResponseWriter, r *http.Request) {
 		fail(w, 429, "Too many attempts. Please wait a few minutes.")
 		return
 	}
-	var id, fails, locked int64
-	var hash string
-	err := s.db.QueryRow(`SELECT id,hash,fails,locked_until FROM admins WHERE email=?`, strings.ToLower(strings.TrimSpace(in.Email))).Scan(&id, &hash, &fails, &locked)
-	if err == nil && locked > now() {
+	email := strings.ToLower(strings.TrimSpace(in.Email))
+	adm, err := s.admins.Get(email)
+	if err != nil {
+		log.Printf("admin login: %s store error: %v", s.admins.Name(), err)
+		s.seedAdmin() // first start may have happened while the database was down
+		fail(w, 503, "The admin database is not reachable right now. Please try again in a minute.")
+		return
+	}
+	if adm != nil && adm.LockedUntil > now() {
 		fail(w, 429, "Account locked for a few minutes after too many wrong passwords.")
 		return
 	}
-	if err != nil { // spend the same time as a real check so the e-mail cannot be guessed from timing
+	if adm == nil { // spend the same time as a real check so the e-mail cannot be guessed from timing
 		bcrypt.CompareHashAndPassword([]byte("$2a$11$0123456789012345678901uJ1b6o9mQz1x2o4n0m1aQp3m3n5k7yS"), []byte(in.Password))
 		fail(w, 401, "E-mail or password is wrong")
 		return
 	}
-	if bcrypt.CompareHashAndPassword([]byte(hash), []byte(in.Password)) != nil {
-		fails++
-		lock := int64(0)
+	if bcrypt.CompareHashAndPassword([]byte(adm.Hash), []byte(in.Password)) != nil {
+		fails, lock := adm.Fails+1, int64(0)
 		if fails >= 5 {
 			lock, fails = now()+900, 0
 		}
-		s.db.Exec(`UPDATE admins SET fails=?, locked_until=? WHERE id=?`, fails, lock, id)
+		s.admins.SetFails(email, fails, lock)
 		fail(w, 401, "E-mail or password is wrong")
 		return
 	}
-	s.db.Exec(`UPDATE admins SET fails=0, locked_until=0 WHERE id=?`, id)
-	s.db.Exec(`DELETE FROM sessions WHERE expires<?`, now())
+	if adm.Fails != 0 || adm.LockedUntil != 0 {
+		s.admins.SetFails(email, 0, 0)
+	}
+	s.db.Exec(`DELETE FROM sess WHERE expires<?`, now())
 	tk := token()
-	s.db.Exec(`INSERT INTO sessions(token_hash,admin_id,expires) VALUES(?,?,?)`, sha(tk), id, now()+12*3600)
+	s.db.Exec(`INSERT INTO sess(token_hash,admin_key,expires) VALUES(?,?,?)`, sha(tk), email, now()+12*3600)
 	http.SetCookie(w, &http.Cookie{Name: sessCookie, Value: tk, Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, Secure: strings.HasPrefix(s.site, "https://"), MaxAge: 12 * 3600})
 	writeJSON(w, 200, map[string]any{"ok": true})
 }
@@ -200,10 +214,13 @@ func (s *Server) changePassword(w http.ResponseWriter, r *http.Request) {
 	if !readJSON(w, r, &in) {
 		return
 	}
-	id := s.adminID(r)
-	var hash string
-	s.db.QueryRow(`SELECT hash FROM admins WHERE id=?`, id).Scan(&hash)
-	if bcrypt.CompareHashAndPassword([]byte(hash), []byte(in.Old)) != nil {
+	key := s.adminKey(r)
+	adm, err := s.admins.Get(key)
+	if err != nil || adm == nil {
+		fail(w, 503, "The admin database is not reachable right now. Please try again in a minute.")
+		return
+	}
+	if bcrypt.CompareHashAndPassword([]byte(adm.Hash), []byte(in.Old)) != nil {
 		fail(w, 400, "Current password is wrong")
 		return
 	}
@@ -212,9 +229,12 @@ func (s *Server) changePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	h, _ := bcrypt.GenerateFromPassword([]byte(in.New), 11)
-	s.db.Exec(`UPDATE admins SET hash=? WHERE id=?`, string(h), id)
+	if err := s.admins.SetHash(key, string(h)); err != nil {
+		fail(w, 503, "Could not save the new password. Please try again.")
+		return
+	}
 	c, _ := r.Cookie(sessCookie)
-	s.db.Exec(`DELETE FROM sessions WHERE admin_id=? AND token_hash<>?`, id, sha(c.Value)) // log out other devices
+	s.db.Exec(`DELETE FROM sess WHERE admin_key=? AND token_hash<>?`, key, sha(c.Value)) // log out other devices
 	writeJSON(w, 200, map[string]any{"ok": true})
 }
 

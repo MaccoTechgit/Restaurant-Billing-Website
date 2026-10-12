@@ -260,3 +260,5 @@ footer .wm i{color:#8f9ab3}
   .bubble,.pl,.ticket,.chips .c3,.ring,.stamp,.hand,.tv .t3{animation:none!important;opacity:1!important}
   .ring{transform:translate(-50%,0)}.stamp{transform:rotate(-12deg)}.rcp{animation:none!important;transform:none}.tv .t0,.tv .t1,.tv .t2,.chips .c1,.chips .c2,.pulse,.st:before{display:none}
 }
+
+.nav nav>a.cur{color:var(--ink);background:var(--soft)}
