@@ -68,7 +68,7 @@ func main() {
 
 	handler := s.routes()
 	addr := env("ADDR", ":"+env("PORT", "4000")) // hosting platforms usually provide PORT
-	log.Printf("MacBill System site: http://localhost%s   admin: /admin", addr)
+	log.Printf("MacBill System site listening on %s - public address %s (admin: %s/admin)", addr, strings.TrimRight(s.site, "/"), strings.TrimRight(s.site, "/"))
 	srv := &http.Server{Addr: addr, Handler: handler, ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 30 * time.Second, WriteTimeout: 60 * time.Second, IdleTimeout: 120 * time.Second}
 	log.Fatal(srv.ListenAndServe())
 }
