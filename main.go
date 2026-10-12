@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -46,6 +47,10 @@ func env(k, d string) string {
 func main() {
 	loadDotEnv()
 	_ = os.MkdirAll("data", 0o755)
+	if d := filepath.Dir(env("DB_PATH", "data/macbill.db")); d != "." {
+		_ = os.MkdirAll(d, 0o755)
+	}
+	logEnvStatus()
 	db, err := openDB(env("DB_PATH", "data/macbill.db"))
 	if err != nil {
 		log.Fatal(err)
@@ -62,7 +67,7 @@ func main() {
 	go s.reminderLoop()
 
 	handler := s.routes()
-	addr := env("ADDR", ":4000")
+	addr := env("ADDR", ":"+env("PORT", "4000")) // hosting platforms usually provide PORT
 	log.Printf("MacBill System site: http://localhost%s   admin: /admin", addr)
 	srv := &http.Server{Addr: addr, Handler: handler, ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 30 * time.Second, WriteTimeout: 60 * time.Second, IdleTimeout: 120 * time.Second}
 	log.Fatal(srv.ListenAndServe())
@@ -296,4 +301,17 @@ func (s *Server) routes() http.Handler {
 		pages.notFound(w, r)
 	})
 	return gz(s.canonical(s.secure(mux)))
+}
+
+// logEnvStatus prints which important settings were found (names only - never the values), to make deployment problems obvious.
+func logEnvStatus() {
+	var set, missing []string
+	for _, k := range []string{"SITE_URL", "MONGO_URI", "MONGO_DB", "ADMIN_EMAIL", "ADMIN_PASSWORD", "TRUST_PROXY", "CANONICAL_REDIRECT", "DB_PATH", "MAIL_HOST", "MAIL_USER", "MAIL_PASS", "MAIL_FROM", "PORT"} {
+		if strings.TrimSpace(os.Getenv(k)) != "" {
+			set = append(set, k)
+		} else {
+			missing = append(missing, k)
+		}
+	}
+	log.Printf("environment: set=[%s] not set=[%s]", strings.Join(set, " "), strings.Join(missing, " "))
 }
