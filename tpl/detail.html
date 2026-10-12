@@ -1,0 +1,38 @@
+{{define "content"}}{{$d := .D}}
+<section class="phero"><div class="wrap">
+  {{template "crumbs" .}}
+  <div class="pgrid"><div>
+    <span class="pill">{{ico $d.Icon}} {{$d.Name}}</span>
+    <h1>{{$d.H1}}</h1>
+    <p class="lead">{{$d.Lead}}</p>
+    <div class="cta"><a class="btn acc lg" href="/contact">Get a free demo</a><a class="btn ghost lg" href="/pricing">See pricing</a></div>
+  </div>
+  <div class="glass sidebox"><h2>At a glance</h2><ul class="tick">{{range $d.Bullets}}<li>{{.}}</li>{{end}}</ul></div></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-h"><h2>{{if eq $d.Kind "solution"}}Why {{$d.Name}} choose {{$.Company}}{{else}}What you get{{end}}</h2></div>
+  <div class="grid g3">{{range $d.Points}}<div class="glass feat"><div class="ic">{{ico .Icon}}</div><h3>{{.Title}}</h3><p>{{.Text}}</p></div>{{end}}</div>
+</div></section>
+
+{{if $d.Steps}}<section><div class="wrap">
+  <div class="sec-h"><h2>How it works</h2></div>
+  <div class="grid g3 steps">{{range $d.Steps}}<div class="glass feat"><div class="num">{{.Icon}}</div><h3>{{.Title}}</h3><p>{{.Text}}</p></div>{{end}}</div>
+</div></section>{{end}}
+
+{{if $d.FAQ}}<section><div class="wrap">
+  <div class="sec-h"><h2>Questions about {{$d.Name}}</h2></div>
+  {{template "faqlist" $d.FAQ}}
+</div></section>{{end}}
+
+{{if .RelDetails}}<section><div class="wrap">
+  <div class="sec-h"><h2>Works together with</h2></div>
+  <div class="grid g3">{{range .RelDetails}}<a class="glass feat linkcard" href="{{.Path}}"><div class="ic">{{ico .Icon}}</div><h3>{{.Name}}</h3><p>{{.Short}}.</p><span class="more">Learn more →</span></a>{{end}}</div>
+</div></section>{{end}}
+
+{{if .RelPosts}}<section><div class="wrap">
+  <div class="sec-h"><h2>Related reading</h2></div>
+  <div class="grid g3">{{range .RelPosts}}<a class="glass feat linkcard" href="{{.Path}}"><small class="muted">{{.Read}} read</small><h3>{{.Title}}</h3><p>{{.Desc}}</p><span class="more">Read →</span></a>{{end}}</div>
+</div></section>{{end}}
+{{template "cta"}}
+{{end}}

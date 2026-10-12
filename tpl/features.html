@@ -1,0 +1,22 @@
+{{define "content"}}
+<section class="phero"><div class="wrap">{{template "crumbs" .}}
+  <div class="sec-h" style="margin-bottom:0"><div class="eyebrow">Features</div><h1>Everything a restaurant needs, in one system</h1><p>Connected modules that share the same data - so you enter things once and see them everywhere.</p></div>
+</div></section>
+<section><div class="wrap"><div class="grid g3">
+  {{range .Products}}<a class="glass feat linkcard" href="{{.Path}}"><div class="ic">{{ico .Icon}}</div><h3>{{.Name}}</h3><p>{{.Short}}.</p><ul class="mini">{{range .Bullets}}<li>{{.}}</li>{{end}}</ul><span class="more">Explore {{.Name}} →</span></a>{{end}}
+</div></div></section>
+<section id="solutions"><div class="wrap"><div class="sec-h"><div class="eyebrow">Solutions</div><h2>For every kind of food business</h2></div>
+  <div class="grid g3">{{range .Solutions}}<a class="glass feat linkcard" href="{{.Path}}"><div class="ic">{{ico .Icon}}</div><h3>{{.Name}}</h3><p>{{.Short}}.</p><span class="more">See how →</span></a>{{end}}</div></div></section>
+<section><div class="wrap"><div class="sec-h"><div class="eyebrow">And more</div><h2>Details that save time every day</h2></div>
+  <div class="grid g4">
+    <div class="glass feat"><div class="ic">{{ico "🔐"}}</div><h3>12 staff roles</h3><p>Plus custom roles, with an audit trail of important actions.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🖨"}}</div><h3>Proper receipts</h3><p>58mm/80mm slips with barcode and QR, never a full page.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "⌨"}}</div><h3>Keyboard shortcuts</h3><p>Do the common jobs without touching the mouse.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🌗"}}</div><h3>Light &amp; dark</h3><p>A clean glass design that is comfortable in any light.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🏬"}}</div><h3>Multiple branches</h3><p>One dashboard for all outlets, with separate stock and staff.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🎫"}}</div><h3>Support tickets</h3><p>Raise an issue from inside the software and we respond.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "📤"}}</div><h3>Excel &amp; CSV export</h3><p>Hand data to your accountant in one click.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "⚡"}}</div><h3>Built for speed</h3><p>A fast Go backend tested with 50,000 simulated users.</p></div>
+  </div></div></section>
+{{template "cta"}}
+{{end}}

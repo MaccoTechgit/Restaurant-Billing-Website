@@ -1,0 +1,19 @@
+{{define "content"}}
+<section class="phero"><div class="wrap">{{template "crumbs" .}}
+  <div class="sec-h" style="margin-bottom:0"><div class="eyebrow">Pricing</div><h1>Simple plans. No hidden charges.</h1><p>One fixed price for the whole period. No per-bill or per-order fees. Free setup and a training call included.</p></div>
+</div></section>
+<section style="padding-top:20px"><div class="wrap">
+  {{template "plans"}}
+  <p class="note">All prices are in Indian Rupees. GST extra as applicable. Need more than five outlets? <a href="/contact">Talk to us</a>.</p>
+</div></section>
+<section><div class="wrap"><div class="sec-h"><h2>Included in every plan</h2></div>
+  <div class="grid g4">
+    <div class="glass feat"><div class="ic">{{ico "🎓"}}</div><h3>Free training</h3><p>A call to teach your team the screens that matter.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🛠"}}</div><h3>Free setup</h3><p>We help with menu, tables, taxes and printer.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "🔄"}}</div><h3>Updates</h3><p>New improvements arrive during your plan at no extra cost.</p></div>
+    <div class="glass feat"><div class="ic">{{ico "📞"}}</div><h3>Support</h3><p>Help by e-mail, with phone and WhatsApp on higher plans.</p></div>
+  </div></div></section>
+<section><div class="wrap"><div class="sec-h"><h2>Pricing questions</h2></div>
+  {{template "faqlist" .GeneralFAQ}}</div></section>
+{{template "cta"}}
+{{end}}

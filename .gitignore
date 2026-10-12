@@ -1,0 +1,5 @@
+data/
+*.exe
+*.log
+email-preview.html
+.env

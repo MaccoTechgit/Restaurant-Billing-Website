@@ -1,0 +1,10 @@
+{{define "content"}}
+<section class="phero"><div class="wrap">{{template "crumbs" .}}
+  <div class="sec-h" style="margin-bottom:0"><div class="eyebrow">Blog</div><h1>Restaurant management guides</h1><p>Practical, plain-language advice for owners and managers.</p></div></div></section>
+<section style="padding-top:20px"><div class="wrap">
+  <div class="grid g2" style="margin-bottom:20px">{{range .Guides}}<a class="glass feat linkcard" href="{{.Path}}"><span class="eyebrow">Guide</span><h2 style="font-size:22px;margin:4px 0 8px">{{.Title}}</h2><p>{{.Desc}}</p><span class="more">Read the guide</span></a>{{end}}</div>
+  <div class="grid g3">
+  {{range .Posts}}<a class="glass feat linkcard" href="{{.Path}}"><small class="muted">{{.Date}} · {{.Read}} read</small><h2 style="font-size:20px;margin:6px 0">{{.Title}}</h2><p>{{.Desc}}</p><span class="more">Read article →</span></a>{{end}}
+</div></div></section>
+{{template "cta"}}
+{{end}}

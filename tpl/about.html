@@ -1,0 +1,21 @@
+{{define "content"}}
+<section class="phero"><div class="wrap">{{template "crumbs" .}}
+  <div class="sec-h" style="margin-bottom:0"><div class="eyebrow">About us</div><h1>Software made for the people who run restaurants</h1><p>{{.Company}} exists to make restaurant work simpler, faster and more professional - for the owner, the cashier, the waiter and the chef.</p></div>
+</div></section>
+<section><div class="wrap"><div class="grid g3">
+  <div class="glass feat"><div class="ic">{{ico "🎯"}}</div><h3>Simple first</h3><p>If a new staff member cannot use a screen in minutes, we redesign it. Power should never cost clarity.</p></div>
+  <div class="glass feat"><div class="ic">{{ico "⚡"}}</div><h3>Fast always</h3><p>Billing cannot wait. We build on Go, a fast language, so busy hours stay smooth.</p></div>
+  <div class="glass feat"><div class="ic">{{ico "🔒"}}</div><h3>Safe by design</h3><p>Role-based access, audit trails and secure defaults protect your money and your data.</p></div>
+</div></div></section>
+<section><div class="wrap narrow"><div class="glass prose" style="padding:34px">
+  <h2>Who we are</h2>
+  <p>{{.Company}} is a product of {{.Legal}}, based in Sitamarhi, Bihar, India.</p>
+  <h2>What we build</h2>
+  <p>{{.Company}} brings billing, kitchen, stock, accounts, staff and delivery into one connected system. A sale updates stock, the books and the reports automatically, so you are not typing the same thing into three places.</p>
+  <h2>How we work with you</h2>
+  <p>We start with a live demo on your own menu, set the system up with you, train your team and stay available afterwards. Plans are fixed-price for 6 months or a year, so there are no surprises.</p>
+  <h2>Talk to us</h2>
+  <p>Questions, ideas or a special requirement? Write to <a href="mailto:{{.Email}}">{{.Email}}</a> or call <a href="tel:+{{.WA}}">{{.Phone}}</a>.</p>
+</div></div></section>
+{{template "cta"}}
+{{end}}

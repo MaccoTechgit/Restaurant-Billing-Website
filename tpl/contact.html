@@ -1,0 +1,17 @@
+{{define "content"}}
+<section class="phero"><div class="wrap">{{template "crumbs" .}}
+  <div class="sec-h" style="margin-bottom:0"><div class="eyebrow">Contact</div><h1>Get a free demo for your restaurant</h1></div></div></section>
+<section style="padding-top:20px"><div class="wrap">
+  <div class="glass enq" id="contact">
+    <div class="side">
+      <div><h2>Let us talk about your restaurant</h2></div>
+      <p>Fill the form and our team will <b>contact you very soon</b>. You will also get a confirmation e-mail right away.</p>
+      <div class="ci"><i>{{ico "📞"}}</i><a href="tel:+{{.WA}}">{{.Phone}}</a></div>
+      <div class="ci"><i>{{ico "✉️"}}</i><a href="mailto:{{.Email}}">{{.Email}}</a></div>
+      <div class="ci"><i>{{ico "📍"}}</i><span>{{.Address}}</span></div>
+      <div class="ci"><i>{{ico "⏱"}}</i><span>We usually reply within {{.Reply}} hours</span></div>
+    </div>
+    <div class="formcol">{{template "form"}}</div>
+  </div>
+</div></section>
+{{end}}

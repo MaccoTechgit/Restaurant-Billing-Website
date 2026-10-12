@@ -1,0 +1,17 @@
+{{define "content"}}{{$p := .P}}
+<section class="phero"><div class="wrap narrow">{{template "crumbs" .}}
+  <article>
+    <small class="muted">{{$p.Date}} · {{$p.Read}} read</small>
+    <h1 style="margin:8px 0 14px">{{$p.Title}}</h1>
+    <p class="lead">{{$p.Intro}}</p>
+    <div class="prose">
+      {{range $p.Sections}}<h2>{{.H}}</h2>{{range .Body}}<p>{{.}}</p>{{end}}{{if .List}}<ul>{{range .List}}<li>{{.}}</li>{{end}}</ul>{{end}}{{end}}
+    </div>
+    {{if $p.FAQ}}<h2 style="font-size:26px;margin:40px 0 16px">Frequently asked questions</h2>{{template "faqlist" $p.FAQ}}{{end}}
+  </article>
+  {{if .RelDetails}}<div class="glass sidebox" style="margin-top:30px"><h2>Related in {{.Company}}</h2><ul class="tick">{{range .RelDetails}}<li><a href="{{.Path}}"><b>{{.Name}}</b></a> - {{.Short}}</li>{{end}}</ul></div>{{end}}
+</div></section>
+{{if .RelPosts}}<section><div class="wrap"><div class="sec-h"><h2>More articles</h2></div>
+  <div class="grid g3">{{range .RelPosts}}<a class="glass feat linkcard" href="{{.Path}}"><small class="muted">{{.Read}} read</small><h3>{{.Title}}</h3><p>{{.Desc}}</p><span class="more">Read →</span></a>{{end}}</div></div></section>{{end}}
+{{template "cta"}}
+{{end}}

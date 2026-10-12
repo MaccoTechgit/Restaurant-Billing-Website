@@ -1,0 +1,176 @@
+{{define "content"}}
+<section class="hero"><div class="wrap">
+  <span class="badge-top"><b>New</b> Barcode &amp; QR on every bill, kitchen ready-alerts</span>
+  <h1>Run every table, order and rupee from <em>one calm screen</em></h1>
+  <p class="lead">{{.Company}} brings billing, kitchen, stock, staff and accounts into one fast system - simple enough for a new waiter, strong enough for your busiest night.</p>
+  <div class="cta"><a class="btn acc lg" href="/contact">Get a free demo</a><a class="btn ghost lg" href="/pricing">View pricing</a></div>
+  <div class="checks"><span>{{ico "check"}}Live in one day</span><span>{{ico "check"}}Free setup &amp; training</span><span>{{ico "check"}}Any PC, tablet or phone</span></div>
+
+  <div class="stage" aria-hidden="true">
+    <div class="win">
+      <div class="tb"><i></i><i></i><i></i><span>app.macbill.in / dashboard</span></div>
+      <div class="body">
+        <div class="sb"><b class="on">{{ico "chart"}}</b><b>{{ico "receipt"}}</b><b>{{ico "flame"}}</b><b>{{ico "box"}}</b><b>{{ico "users"}}</b><b>{{ico "book"}}</b></div>
+        <div class="mn">
+          <div class="kp">
+            <div><small>Today's sales</small><b>₹48,260</b><em>▲ 12.4%</em></div>
+            <div><small>Orders</small><b>142</b><em>▲ 8</em></div>
+            <div><small>Average bill</small><b>₹340</b><em>▲ 3.1%</em></div>
+            <div><small>Tables in use</small><b>9 / 14</b><small>2 waiting to pay</small></div>
+          </div>
+          <div class="ch"><h4>Sales by hour <span>Sample data</span></h4><div class="bars"><i style="height:22%"></i><i style="height:34%"></i><i style="height:48%"></i><i style="height:40%"></i><i style="height:62%"></i><i style="height:88%"></i><i style="height:100%"></i><i style="height:76%"></i><i style="height:58%"></i><i style="height:70%"></i><i style="height:44%"></i><i style="height:30%"></i></div></div>
+          <table class="mt"><thead><tr><th>Order</th><th>Table</th><th>Items</th><th>Status</th><th class="r">Amount</th></tr></thead><tbody>
+            <tr><td><b>#1042</b></td><td>Table 6</td><td>3</td><td><span class="chip g">Ready</span></td><td class="r">₹787</td></tr>
+            <tr><td><b>#1043</b></td><td>Takeaway</td><td>2</td><td><span class="chip o">Preparing</span></td><td class="r">₹430</td></tr>
+            <tr><td><b>#1044</b></td><td>Table 2</td><td>5</td><td><span class="chip b">Paid · UPI</span></td><td class="r">₹1,260</td></tr>
+          </tbody></table>
+        </div>
+        <div class="rc"><div class="slip"><div class="c"><b>{{.Company}}</b><br>Order MAIN-1042</div><hr>
+          <div class="r"><span>2 × Butter Chicken</span><span>640</span></div><div class="r"><span>1 × Cold Coffee</span><span>110</span></div><div class="r"><span>GST 5%</span><span>37</span></div><hr>
+          <div class="r"><b>TOTAL</b><b>₹787</b></div><div class="r"><span>Paid by</span><span>UPI</span></div>
+          <div class="bcw">{{barcode "MAIN-1042" 40}}<small>MAIN-1042</small></div><div class="qrw">{{qr "MAIN-1042"}}</div></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="strip"><div class="wrap"><small>Built for</small>
+  <span>{{ico "utensils"}}Restaurants</span><span>{{ico "coffee"}}Cafés</span><span>{{ico "takeaway"}}Cloud kitchens</span><span>{{ico "cake"}}Bakeries</span><span>{{ico "building"}}Restaurant chains</span></div></div>
+
+<section class="flowsec"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">See it in action</div><h2>From the table to the bill, in one smooth flow</h2><p>Watch an order travel: the guest orders, the counter bills, the kitchen cooks, and the bill is printed and handed over.</p></div>
+  <div class="scene" role="img" aria-label="Animated example: a guest orders at table 6, the operator makes the bill, the kitchen prepares it, then the bill is printed with a barcode and QR and handed to the guest.">
+    <div class="rail"><i class="pulse"></i></div>
+    <div class="track">
+
+      <div class="st st1"><div class="tag"><b>1</b>Guest orders</div>
+        <div class="art">
+          <svg viewBox="0 0 240 170" class="ill" aria-hidden="true">
+            <ellipse cx="120" cy="158" rx="104" ry="8" fill="#000" opacity=".25"/>
+            <!-- guest -->
+            <circle cx="78" cy="58" r="17" fill="#fcd9b6"/><path d="M62 54c2-14 28-18 34-2-8-3-20-4-34 2z" fill="#3a2a22"/>
+            <rect x="58" y="76" width="40" height="46" rx="16" fill="#6366f1"/>
+            <rect x="92" y="88" width="30" height="9" rx="4.5" fill="#fcd9b6" transform="rotate(-12 92 92)"/>
+            <rect x="116" y="70" width="14" height="24" rx="4" fill="#0a0f1e" stroke="#475569" transform="rotate(10 123 82)"/><rect x="118" y="73" width="10" height="16" rx="2" fill="#fb923c" transform="rotate(10 123 82)"/>
+            <!-- table -->
+            <rect x="34" y="118" width="172" height="12" rx="6" fill="#e2e8f0"/><rect x="52" y="130" width="8" height="26" rx="3" fill="#94a3b8"/><rect x="180" y="130" width="8" height="26" rx="3" fill="#94a3b8"/>
+            <ellipse cx="150" cy="116" rx="22" ry="5" fill="#fff"/><path d="M135 114c4-12 26-12 30 0z" fill="#f97316"/>
+            <rect x="186" y="104" width="16" height="14" rx="3" fill="#fff" opacity=".9"/>
+            <text x="120" y="164" text-anchor="middle" font-size="11" fill="#cbd5e1" font-weight="600">Table 6</text>
+          </svg>
+          <div class="bubble"><b>2 × Butter Chicken</b><br>1 × Cold Coffee</div>
+        </div>
+        <p class="cap">Orders from the table - by waiter or by scanning the QR card.</p></div>
+
+      <div class="st st2"><div class="tag"><b>2</b>Operator bills</div>
+        <div class="art">
+          <div class="posscr">
+            <div class="ph"><i></i><i></i><i></i><span>POS · Counter 1</span></div>
+            <div class="pl a1"><span>2 × Butter Chicken</span><b>₹640</b></div>
+            <div class="pl a2"><span>1 × Cold Coffee</span><b>₹110</b></div>
+            <div class="pl a3"><span>GST 5%</span><b>₹37</b></div>
+            <div class="ptot"><span>Total</span><span class="tv"><b class="t0">₹0</b><b class="t1">₹640</b><b class="t2">₹750</b><b class="t3">₹787</b></span></div>
+            <div class="pbtn2">Send to kitchen</div>
+          </div>
+          <svg viewBox="0 0 90 120" class="op" aria-hidden="true"><circle cx="45" cy="30" r="17" fill="#fcd9b6"/><path d="M28 26c3-16 31-18 34 0-10-5-24-5-34 0z" fill="#1f2937"/><rect x="22" y="50" width="46" height="62" rx="18" fill="#f97316"/><rect x="36" y="56" width="18" height="10" rx="3" fill="#fff" opacity=".9"/></svg>
+        </div>
+        <p class="cap">The operator adds items, tax is worked out for you, the order goes to the kitchen.</p></div>
+
+      <div class="st st3"><div class="tag"><b>3</b>Kitchen cooks</div>
+        <div class="art">
+          <div class="ticket">
+            <div class="th"><b>#1042</b><span>Table 6</span></div>
+            <div class="ti">2 × Butter Chicken</div><div class="ti">1 × Cold Coffee</div>
+            <div class="chips"><span class="chip o c1">New</span><span class="chip o c2">Cooking</span><span class="chip g c3">Ready</span></div>
+          </div>
+          <svg viewBox="0 0 90 120" class="op chef" aria-hidden="true"><path d="M28 20c-8-2-10-14 0-16 4-8 20-8 24 0 10 2 8 14 0 16z" fill="#fff"/><rect x="28" y="18" width="34" height="10" fill="#fff"/><circle cx="45" cy="38" r="15" fill="#fcd9b6"/><rect x="22" y="56" width="46" height="56" rx="18" fill="#fff"/><rect x="40" y="62" width="10" height="44" fill="#e2e8f0"/></svg>
+          <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg><span>Order ready!</span></div>
+        </div>
+        <p class="cap">The ticket shows on the kitchen screen. When it is ready, the waiter is alerted.</p></div>
+
+      <div class="st st4"><div class="tag"><b>4</b>Bill printed &amp; handed over</div>
+        <div class="art">
+          <div class="printer"><div class="pslot"></div></div>
+          <div class="paper"><div class="rcp">
+            <div class="c"><b>{{.Company}}</b><br>Order MAIN-1042</div>
+            <div class="r"><span>2 × Butter Chicken</span><span>640</span></div><div class="r"><span>1 × Cold Coffee</span><span>110</span></div><div class="r"><span>GST 5%</span><span>37</span></div>
+            <div class="r tt"><b>TOTAL</b><b>₹787</b></div>
+            <div class="bcw">{{barcode "MAIN-1042" 34}}</div><div class="qrw sm">{{qr "MAIN-1042"}}</div>
+          </div></div>
+          <div class="stamp">PAID · UPI ✓</div>
+          <div class="hand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>To the guest</div>
+        </div>
+        <p class="cap">A neat 80mm bill with barcode and QR comes out. The guest pays by cash, card or UPI.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="soft"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Everything in one place</div><h2>One system. No more juggling apps.</h2><p>Every part shares the same live data, so you enter things once and see them everywhere.</p></div>
+  <div class="bento">
+    <a class="glass b s4 linkcard" href="/pos-billing"><div class="ic">{{ico "receipt"}}</div><h3>Billing that keeps up with your counter</h3><p>Dine-in, takeaway and delivery. GST, split bills, every payment mode, and receipts that print on 58mm or 80mm rolls with barcode and QR.</p>
+      <div class="viz tk"><div><b>#1042</b> Table 6 · 3 items<span class="t"><span class="chip g">Paid · Cash</span></span></div><div><b>#1043</b> Takeaway · 2 items<span class="t"><span class="chip o">Awaiting payment</span></span></div></div></a>
+    <a class="glass b s2 linkcard" href="/qr-ordering"><div class="ic">{{ico "phone"}}</div><h3>Guests order from the table</h3><p>Scan, browse, order. No app.</p>
+      <div class="viz"><div class="qrphone"><div class="qrw">{{qr "https://macbill.in/t/6"}}</div><small>Table 6 · Scan to order</small></div></div></a>
+    <a class="glass b s2 linkcard" href="/kitchen-display"><div class="ic">{{ico "flame"}}</div><h3>Kitchen, always in sync</h3><p>Orders appear instantly; waiters are alerted when food is ready.</p>
+      <div class="viz tk"><div><b>#1042</b> Table 6<span class="t"><span class="chip g">Ready</span></span></div><div><b>#1043</b> Takeaway<span class="t"><span class="chip o">Cooking</span></span></div></div></a>
+    <a class="glass b s4 linkcard" href="/reports-analytics"><div class="ic">{{ico "chart"}}</div><h3>Know your numbers, today</h3><p>Sales by hour, best sellers, payment modes and staff performance - live, and exportable for your accountant.</p>
+      <div class="viz"><div class="bars"><i style="height:30%"></i><i style="height:46%"></i><i style="height:38%"></i><i style="height:64%"></i><i style="height:82%"></i><i style="height:100%"></i><i style="height:72%"></i><i style="height:90%"></i><i style="height:56%"></i><i style="height:68%"></i><i style="height:48%"></i><i style="height:60%"></i></div></div></a>
+    <a class="glass b s3 linkcard" href="/inventory"><div class="ic">{{ico "box"}}</div><h3>Stock that watches itself</h3><p>Deducts as you sell. Warns before you run out.</p>
+      <div class="viz prog"><div><span>Paneer<b>82%</b></span><i style="--w:82%"></i></div><div><span>Cooking oil<b>41%</b></span><i style="--w:41%"></i></div><div><span>Basmati rice<b>16% · reorder</b></span><i style="--w:16%"></i></div></div></a>
+    <a class="glass b s3 linkcard" href="/hr-payroll"><div class="ic">{{ico "lock"}}</div><h3>The right access for everyone</h3><p>12 ready roles plus custom ones, with an audit trail of who did what.</p>
+      <div class="viz roles"><span>Owner</span><span>Manager</span><span>Cashier</span><span>POS operator</span><span>Waiter</span><span>Chef</span><span>Accountant</span><span>HR</span><span>Driver</span></div></a>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap"><div class="band">
+  <div><b>50,000</b><span>users load-tested at once</span></div><div><b>&lt; 0.1s</b><span>typical screen response</span></div><div><b>12</b><span>ready-made staff roles</span></div><div><b>1 day</b><span>to get you live</span></div>
+</div></div></section>
+
+<section class="soft"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Modules</div><h2>Everything your restaurant runs on</h2></div>
+  <div class="grid g3">{{range .Products}}<a class="glass feat linkcard" href="{{.Path}}"><div class="ic">{{ico .Icon}}</div><h3>{{.Name}}</h3><p>{{.Short}}.</p><span class="more">Learn more</span></a>{{end}}</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Solutions</div><h2>Made for the way you serve</h2></div>
+  <div class="grid g3">{{range .Solutions}}<a class="glass feat linkcard" href="{{.Path}}"><div class="ic">{{ico .Icon}}</div><h3>{{.Name}}</h3><p>{{.Short}}.</p><span class="more">See how it fits</span></a>{{end}}</div>
+</div></section>
+
+<section class="soft"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Getting started</div><h2>Live in three easy steps</h2></div>
+  <div class="grid g3 steps">
+    <div class="glass feat"><div class="num">1</div><h3>Tell us about your restaurant</h3><p>Send an enquiry. We call you very soon and show a live demo on your own menu.</p></div>
+    <div class="glass feat"><div class="num">2</div><h3>We set everything up</h3><p>Menu, tables, taxes, printer and staff logins - done for you, with a free training call.</p></div>
+    <div class="glass feat"><div class="num">3</div><h3>Start billing</h3><p>Take your first order the same day. We stay on call if your team needs anything.</p></div>
+  </div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Pricing</div><h2>Simple plans. No hidden charges.</h2><p>Pay once for the period. Renew only if you are happy.</p></div>
+  {{template "plans"}}
+  <p class="note">Prices in Indian Rupees, GST extra as applicable. See the <a href="/pricing">full pricing page</a>.</p>
+</div></section>
+
+<section class="soft"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">From the blog</div><h2>Guides for restaurant owners</h2></div>
+  <div class="grid g3">{{range .RelPosts}}<a class="glass feat linkcard" href="{{.Path}}"><small class="muted">{{.Read}} read</small><h3 style="margin-top:6px">{{.Title}}</h3><p>{{.Desc}}</p><span class="more">Read article</span></a>{{end}}</div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Questions</div><h2>Good to know</h2></div>
+  {{template "faqlist" (slice .GeneralFAQ 0 5)}}
+  <p class="note"><a href="/faq">See all questions</a></p>
+</div></section>
+
+<section class="soft" id="visit"><div class="wrap">
+  <div class="sec-h"><div class="eyebrow">Contact us</div><h2>Talk to a real person</h2><p>Call, message or visit - we are happy to help you choose the right plan.</p></div>
+  <div class="grid g3 ccards">
+    <a class="glass feat linkcard" href="tel:+{{.WA}}"><div class="ic">{{ico "call"}}</div><h3>Call us</h3><p>{{.Phone}}</p><span class="more">Call now</span></a>
+    <a class="glass feat linkcard" href="mailto:{{.Email}}"><div class="ic">{{ico "mail"}}</div><h3>E-mail us</h3><p>{{.Email}}</p><span class="more">Write to us</span></a>
+    <a class="glass feat linkcard" href="https://wa.me/{{.WA}}" target="_blank" rel="noopener"><div class="ic">{{ico "chat"}}</div><h3>WhatsApp</h3><p>Quick answers and demo booking.</p><span class="more">Start a chat</span></a>
+  </div>
+  <div class="glass visit"><div class="ic">{{ico "pin"}}</div><div><h3>Visit our office</h3><p>{{.Legal}}<br>{{.Address}}</p></div><a class="btn ghost" href="{{.MapsURL}}" target="_blank" rel="noopener">Open in Google Maps</a></div>
+</div></section>
+{{template "cta"}}
+{{end}}

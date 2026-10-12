@@ -1,0 +1,43 @@
+{{define "content"}}
+<section class="phero"><div class="wrap narrow">{{template "crumbs" .}}
+  {{if eq .Tmpl "privacy"}}
+  <h1>Privacy Policy</h1><p class="muted">Last updated: 1 October 2026</p>
+  <div class="prose">
+    <p>This policy explains what information {{.Company}} collects through this website and how we use it.</p>
+    <h2>What we collect</h2>
+    <p>When you send an enquiry we collect the details you type: your name, e-mail address, phone number, restaurant name, city, preferred plan and message. We also keep your IP address with the enquiry to prevent abuse. Our servers keep ordinary technical logs.</p>
+    <h2>How we use it</h2>
+    <ul><li>To reply to your enquiry and arrange a demo.</li><li>To send you a confirmation e-mail.</li><li>To manage your subscription and send renewal reminders, if you become a customer.</li><li>To keep the website secure and prevent spam.</li></ul>
+    <h2>Sharing</h2>
+    <p>We do not sell your information. It is shared only with service providers we need to run the website and send e-mail, or when the law requires it.</p>
+    <h2>How long we keep it</h2>
+    <p>We keep enquiry details for as long as needed to follow up, and customer records for as long as you have a subscription and for a reasonable period after for accounting.</p>
+    <h2>Your choices</h2>
+    <p>You can ask us to see, correct or delete your information by writing to <a href="mailto:{{.Email}}">{{.Email}}</a>.</p>
+    <h2>Cookies</h2>
+    <p>{{if .GA}}This website uses Google Analytics, with IP anonymisation, to understand how many people visit and which pages are useful. It may set cookies for this purpose. We do not use advertising cookies.{{else}}The public website does not use advertising or tracking cookies.{{end}}</p>
+    <h2>Contact</h2>
+    <p>{{.Legal}} ({{.Company}}), {{.Address}}. E-mail <a href="mailto:{{.Email}}">{{.Email}}</a>.</p>
+  </div>
+  {{else}}
+  <h1>Terms of Service</h1><p class="muted">Last updated: 1 October 2026</p>
+  <div class="prose">
+    <p>These terms apply to your use of the {{.Company}} website and subscription plans. By using them you agree to these terms.</p>
+    <h2>The service</h2>
+    <p>{{.Company}} provides restaurant billing and management software on a subscription basis for the period of the plan you choose. Features available depend on the plan.</p>
+    <h2>Subscriptions and payment</h2>
+    <p>Plans are paid in advance for the plan period. Prices are shown in Indian Rupees and exclude GST unless stated. A renewal extends your subscription from the end of the current period.</p>
+    <h2>Your data</h2>
+    <p>You own the business data you enter. You are responsible for keeping your logins secure and for the actions of the staff you give access to.</p>
+    <h2>Acceptable use</h2>
+    <p>You agree not to misuse the service, attempt to break its security or use it for unlawful purposes.</p>
+    <h2>Availability and changes</h2>
+    <p>We work to keep the service available and secure, and we may improve or change features over time. We will tell you about important changes.</p>
+    <h2>Limits of liability</h2>
+    <p>To the extent the law allows, our liability is limited to the amount you paid for the current plan period. Tax and accounting outputs are tools to help you; please confirm filings with your accountant.</p>
+    <h2>Contact</h2>
+    <p>Questions about these terms: <a href="mailto:{{.Email}}">{{.Email}}</a>.</p>
+  </div>
+  {{end}}
+</div></section>
+{{end}}
